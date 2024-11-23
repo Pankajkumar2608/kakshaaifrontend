@@ -5,17 +5,19 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import LoginModal from './component/LoginModal';  
 import Ai from './component/Ai';
 import Profile from './component/Profile';
 import LogOut from './component/LogoutButton';
-
+import Signup from './component/Signup';
+import Login from './component/Login';
+import Contributors from './component/Contributors';
+import LoadingPage from './component/LoadingPage';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: < Ai/>,
+    element: <LoadingPage />,
   },
   {
     path: "/ai",
@@ -23,14 +25,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginModal />,
+    element: <Login />,
   },{
     path: "/profile",
     element: <Profile />,
   },{
     path: "/logout",
     element: <LogOut />,
-  },
+  },{
+    path: "/signup",
+    element: <Signup />,
+  },{
+    path: "/contributors",
+    element: <Contributors />,}
   
   
 

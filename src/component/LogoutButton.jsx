@@ -9,11 +9,10 @@ const Logout = () => {
     console.log("Logout button clicked");
     try {
       const response = await fetch(logoutUrl, { method: 'GET' });
-      const result = await response.json();
-      console.log(result); // Log the result to inspect it
+      
 
-      if (result.status === 'success') {
-        console.log("Logged out successfully");
+      if (result.status === '200') {
+        
         setTimeout(() => navigate('/login'), 0); // Ensure navigation after logout
       } else {
         console.error("Logout failed:", result.message);

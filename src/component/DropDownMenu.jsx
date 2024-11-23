@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import LogoutButton from "./LogoutButton";
-import Profile from "./Profile";
+
 
 function DropDownMenu() {
     const [isOpen, setIsOpen] = useState(false);

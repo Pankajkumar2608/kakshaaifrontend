@@ -1,50 +1,92 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
-import { Link, Navigate, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  if (isLoading) {
+  useEffect(() => {
+    // Simulate fetching user data from an API
+    fetch("https://user-service-ptwk.onrender.com/v1/profile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // Required for cookies
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error("Failed to fetch user data.");
+      })
+      .then((data) => setUserData(data))
+      .catch((error) => setError(error.message));
+  }, []);
+
+  const handleLogout = () => {
+    fetch("https://user-service-ptwk.onrender.com/v1/logout", {
+      method: "POST",
+      credentials: "include",
+    })
+      .then(() => {
+        navigate("/login");
+      })
+      .catch(() => setError("Failed to logout. Please try again."));
+  };
+
+  if (error) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-700 text-lg animate-pulse">Loading...</div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+        <p className="text-lg text-red-500">{error}</p>
+        <button
+          className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+          onClick={() => navigate("/login")}
+        >
+          Go to Login
+        </button>
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+        <p className="text-lg">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-      {isAuthenticated ? (
-        <div className="bg-white p-6 rounded-lg shadow-md text-center max-w-sm w-full">
-          <img
-            src={user.picture}
-            alt={user.name}
-            className="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-indigo-500"
-          />
-          <h2 className="text-xl font-semibold text-gray-800 mb-1">Welcome, {user.name}!</h2>
-          <p className="text-gray-600 text-sm mb-3">{user.email}</p>
-          <p className="text-gray-700 mb-4">
-            This is your profile page on Kaksha AI. Here you can see your details and access all the personalized resources we offer!
-          </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+      <div className="w-full max-w-lg bg-gray-800 p-6 rounded shadow-lg">
+        <h1 className="text-2xl font-bold text-center mb-4">Profile</h1>
+        <div className="space-y-4">
+          <div>
+            <p className="text-lg font-semibold">Full Name:</p>
+            <p>{userData.fullName}</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Username:</p>
+            <p>{userData.userName}</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Email:</p>
+            <p>{userData.email}</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Joined:</p>
+            <p>{new Date(userData.createdAt).toLocaleDateString()}</p>
+          </div>
         </div>
-      ) : (
-        <div className="text-center bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Welcome to Kaksha AI</h2>
-          <p className="text-gray-600 mb-4">
-            Please log in to access your profile and personalized features.
-          </p>
-          <button
-            onClick={loginWithRedirect}
-            className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300"
-          >
-            Log In
-          </button>
-        </div>
-      )}
+        <button
+          onClick={handleLogout}
+          className="w-full mt-6 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
 
 export default Profile;
-
