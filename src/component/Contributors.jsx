@@ -2,8 +2,8 @@ import React from "react";
 
 const Contributors = () => {
   const contributors = [
-    { name: "Pankaj Kumar", role: "Developer", profileLink: "https://github.com/pankajkumar" },
-    { name: "Sarvesh", role: "Auth And Mentor", profileLink: "https://github.com/johndoe" },
+    { name: "Pankaj Kumar", role: "Developer", profileLink: "https://github.com/Pankajkumar2608" },
+    { name: "Sarvesh", role: "Auth And Mentor", profileLink: "https://github.com/sarvesh371" },
     
   ];
 
