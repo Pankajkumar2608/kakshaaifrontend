@@ -42,7 +42,7 @@ const Login = () => {
           throw new Error("User ID not found in response");
         }
         localStorage.setItem("userId", userId);
-        navigate("/ai");
+        navigate("/ai2");
       })
       .catch((error) => {
         setErrorMessage(

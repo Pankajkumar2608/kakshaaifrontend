@@ -182,7 +182,7 @@ function Ai() {
 
   return (
     <MathJaxContext>
-      <div className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-r from-gray-700 to-gray-900 p-4 font-body">
+      <div className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 font-body">
         <div className="w-full flex items-start justify-between mb-4 fixed top-0 p-2 bg-gray-800">
           <img
             src="https://i.ibb.co/5RF1Xmj/motivation-kaksha-ai.png"
@@ -192,34 +192,50 @@ function Ai() {
           <DropDownMenu />
         </div>
 
-        <div className="chat chat-start">
-          <div className="chat-image avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS chat bubble component"
-                src="https://cdn-icons-png.flaticon.com/512/16921/16921785.png"
-              />
-            </div>
-          </div>
-          <div className="chat-bubble">
-            {messages.map((message, index) => (
+        <div className="w-full max-w-2xl flex flex-col space-y-4 mb-4 mt-12">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              {/* Avatar */}
+              {message.role === "assistant" && (
+                <img
+                  className="w-8 h-8 rounded-full mr-2"
+                  src="https://cdn-icons-png.flaticon.com/512/8794/8794790.png"
+                  alt="AI Avatar"
+                />
+              )}
+
+              {/* Chat Bubble */}
               <div
-                key={index}
-                className={`p-2 ${
+                className={`${
                   message.role === "user"
-                    ? "text-right  "
-                    : "text-left"
-                } m-2 rounded-xl text-white font-body`}
+                    ? "bg-gray-500 text-white font-body"
+                    : "  text-gray-100 font-body"
+                } p-2 rounded-2xl max-w-xs`}
               >
-                {renderMessageContent(message, index)}
+                {renderMessageContent(message)}
               </div>
-            ))}
-          </div>
+
+              {/* User Avatar */}
+              {/* {message.role === "user" && (
+                <img
+                  className="w-8 h-8 rounded-full ml-2"
+                  src="https://cdn-icons-png.flaticon.com/512/15494/15494722.png"
+                  alt="User Avatar"
+                />
+              )} */}
+            </div>
+          ))}
         </div>
 
         <div className="w-full max-w-2xl flex items-center p-2 rounded-lg shadow-lg font-body">
           <input
-            className="flex-grow bg-white p-2 rounded-full text-gray-800"
+            className="flex-grow bg-white p-2 rounded-full text-gray-800 "
+            style={{ height: "auto", minHeight: "3rem" }}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -227,8 +243,9 @@ function Ai() {
             placeholder="Ask Kaksha AI..."
           />
           <button
-            className="bg-white p-2 rounded-full ml-2"
+            className="bg-white p-2 rounded-full  ml-2"
             onClick={handleSend}
+            
           >
             <img
               src="https://cdn-icons-png.flaticon.com/512/15680/15680374.png"

@@ -12,6 +12,8 @@ import Signup from './component/Signup';
 import Login from './component/Login';
 import Contributors from './component/Contributors';
 import LoadingPage from './component/LoadingPage';
+import Chat from './component/Ai2';
+
 
 
 const router = createBrowserRouter([
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
     path: "/ai",
     element: <Ai />,
   },
+  
   {
     path: "/login",
     element: <Login />,
@@ -37,9 +40,11 @@ const router = createBrowserRouter([
     element: <Signup />,
   },{
     path: "/contributors",
-    element: <Contributors />,}
-  
-  
+    element: <Contributors />,
+  },{
+    path: "/ai2",
+    element: <Chat />,
+  }
 
 ]);
 

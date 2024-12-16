@@ -6,6 +6,7 @@ import Profile from './component/Profile';
 import LogOut from './component/LogoutButton';
 import Signup from './component/Signup';
 import LoadingPage from './component/LoadingPage';
+import Chat from './component/Ai2';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/ai" element={<Ai />} />
+        <Route path="/ai" element={<Chat />} />
         <Route path="/profile" element={<Profile />} />
         <Route path= "/logout" element={<LogOut />} />
       
